@@ -1,15 +1,19 @@
 
 import { ClownService } from "./ClownService.js"
-import { fetchRequests } from "./dataAccess.js"
+import { fetchClowns, fetchCompletions, fetchRequests } from "./dataAccess.js"
 
 const mainContainer = document.querySelector("#container")
 
 const render = () => {
-    fetchRequests().then(
-            () => {
-                mainContainer.innerHTML = ClownService()
-            }
-        )
+    fetchRequests()
+    .then(() => fetchCompletions())
+    .then(() => fetchClowns())
+    .then(() => {
+        mainContainer.innerHTML = ClownService()
+    }
+    )
+
+      
 }
 
 render()
