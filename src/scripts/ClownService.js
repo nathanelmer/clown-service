@@ -1,4 +1,4 @@
-import { BookingForm } from "./BookingForm.js"
+import { BookingForm, completedRequests } from "./BookingForm.js"
 import { Requests } from "./Requests.js"
 
 export const ClownService = () => {
@@ -12,9 +12,11 @@ export const ClownService = () => {
     
     <section class="bookingRequests">
         <h2>Booking Requests</h2>
-        <article>
         ${Requests()}
-        </article>
+        </section>
+    <section class"completedRequests">
+        <h2>Completed Requests</h2>
+        ${completedRequests()}
         </section>
         `
 }

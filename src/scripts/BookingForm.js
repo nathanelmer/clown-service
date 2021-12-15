@@ -1,4 +1,4 @@
-import { sendRequest } from "./dataAccess.js";
+import { completeRequest, deleteRequest, getCompletions, sendRequest } from "./dataAccess.js";
 
 export const BookingForm = () => {
     let html = `
@@ -33,6 +33,39 @@ return html
 }
 
 const mainContainer = document.querySelector("#container")
+
+export const completedRequests = () => {
+    const completions = getCompletions()
+    let html = `<h4>Completed Bookings</h4>
+                    <ul>`
+    const completionList = completions.map((completion) => {
+        return `<li id="${completion.id}">
+        <p>Date: ${completion.date} - Party Length ${completion.timeLength}</p>
+        <p>Parent: ${completion.parent} - Child: ${completion.child}</p>
+        <p>Number of Kids: ${completion.numOfKids}</p>
+        <p>Address: ${completion.address}</p>
+        </li>`
+    })
+    html += completionList.join("")
+    html += "</ul>"
+    return html
+}
+
+mainContainer.addEventListener("click", (event) => {
+    if ( event.target.id.startsWith("booking")){
+        const [,bookingId] = event.target.id.split("--")
+        deleteRequest(parseInt(bookingId))
+    }
+})
+
+mainContainer.addEventListener("click", (event) => {
+    if (event.target.id.startsWith("completeRequest--")){
+        const [,completedId] = event.target.id.split("--")
+        completeRequest(parseInt(completedId))
+    }
+})
+
+
 
 mainContainer.addEventListener("click", clickEvent => {
     if (clickEvent.target.id === "submitRequest"){
